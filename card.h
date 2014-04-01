@@ -5,4 +5,4 @@ typedef struct {
 	int force;
 	int cost;
 } card_t;
-
+int attack(card_t *attacker, card_t *defender){
