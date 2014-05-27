@@ -1,0 +1,18 @@
+Welcome to the ELSYS Card Wars tutorial!
+
+There are two players in the game - you, and the enemy AI. 
+Every player has 30 cards in their deck.
+A random player starts the game. 
+Every player draws five cards from the deck.
+On every turn the player draws one card from the deck.
+On every turn you can either play a card, skip your turn or quit the game. 
+In order to play a card, you need to have enough mana. 
+Your manapool is 1 in the beginning of the game.
+It's incremented by one on every turn. 
+At the end of each turn all cards attack all other cards.
+If there are two cards in one corridor, they attack each other. 
+If there is only one card, it attacks the other player's health points. 
+The game finishes when either player's health is brought down to 0. 
+
+Enough rules! 
+Happy playing! 

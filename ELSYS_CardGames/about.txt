@@ -1,0 +1,4 @@
+This application was developed by Stanimir Bogdanov and Dimitar Terziev, students at the Technological School of Electronic Systems, as a group project for programming class.
+The game was inspired by "Hearthstone". 
+No copyright intended. 
+The application is not open-source in order not to let other students cheat. :)  
