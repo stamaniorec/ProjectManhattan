@@ -36,7 +36,6 @@ void play_card(board_t *board, int turn, card_t card_to_put, int num_lane){
 	}
 }
 
-// needs to be worked on!
 void print_field(board_t board){
 	int i;
 	printf("Player: Player, Health: %d/100, Mana: %d/%d\n", 
