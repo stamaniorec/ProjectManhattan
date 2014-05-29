@@ -15,8 +15,6 @@ int can_put_card(card_t card_to_put, manapool_t pool){
 	}
 }
 
-// this needs to be editted
-// why do we push?
 void put_card(card_t card_to_put, manapool_t *pool, struct deck_t *player_deck){
 	switch(can_put_card(card_to_put, *pool)){
 		case 0:printf("You don't have enough mana to put this card\n");
