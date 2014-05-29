@@ -36,7 +36,6 @@ void play_card(board_t *board, int turn, card_t card_to_put, int num_lane){
 	}
 }
 
-// needs to be worked on!
 void print_field(board_t board){
 	int i;
 	printf("Player: Player, Health: %d/100, Mana: %d/%d\n", 
@@ -44,7 +43,15 @@ void print_field(board_t board){
 	printf("|");
 	for(i=0;i<5;i++){
 		if(!is_card_empty(board.lanes[P_ONE][i])){
-			printf(" %d|%d |",board.lanes[P_ONE][i].life,board.lanes[P_ONE][i].force);		
+			if(board.lanes[P_ONE][i].life<10 && board.lanes[P_ONE][i].force<10){
+				printf("  %d|%d  |",board.lanes[P_ONE][i].life,board.lanes[P_ONE][i].force);
+			}else{
+				if(board.lanes[P_ONE][i].life<10||board.lanes[P_ONE][i].force<10){
+					printf("  %d|%d |",board.lanes[P_ONE][i].life,board.lanes[P_ONE][i].force);
+				}else{
+					printf("  %d|%d  |",board.lanes[P_ONE][i].life,board.lanes[P_ONE][i].force);
+				}
+			}		
 		}else {
 			printf("       |");
 		}
@@ -52,11 +59,19 @@ void print_field(board_t board){
 	printf("\n|");
 	for(i=0;i<5;i++){
 		if(!is_card_empty(board.lanes[P_TWO][i])){
-			printf(" %d|%d |",board.lanes[P_TWO][i].life,board.lanes[P_TWO][i].force);		
-		}else {
-			printf("       |");
+			if(board.lanes[P_TWO][i].life<10 && board.lanes[P_TWO][i].force<10){
+					printf("  %d|%d  |",board.lanes[P_TWO][i].life,board.lanes[P_TWO][i].force);
+				}else{
+					if(board.lanes[P_TWO][i].life<10||board.lanes[P_TWO][i].force<10){
+						printf("  %d|%d |",board.lanes[P_TWO][i].life,board.lanes[P_TWO][i].force);
+					}else{
+						printf("  %d|%d  |",board.lanes[P_TWO][i].life,board.lanes[P_TWO][i].force);
+					}
+				}		
+			}else {
+				printf("       |");
+			}
 		}
-	}
 	printf("\nPlayer: Enemy, Health: %d/100, Mana: %d/%d\n", 
 		board.p[P_TWO].health,board.p[P_TWO].manapool.current_mana,board.p[P_TWO].manapool.max_mana);
 }
