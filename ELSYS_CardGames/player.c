@@ -61,7 +61,6 @@ void delete_card_from_hand(struct player *p, char *card_name)
 			p->hand[i].life = 0;
 			p->hand[i].force = 0;
 			p->hand[i].cost = 0;
-			//put_card(p->hand[i], &(p->manapool), &(p->deck)); // why is this here?
 			break;
 		}
 	}

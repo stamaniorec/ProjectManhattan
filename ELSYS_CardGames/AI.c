@@ -20,14 +20,11 @@ int find_best_position(board_t board)
 		// find the player's card with the greatest force
 		if(!is_card_empty(board.lanes[P_ONE][i]))
 		{
-			printf("the card is not empty\n");
 			if(board.lanes[P_ONE][i].force > board.lanes[P_ONE][best_position].force)
 			{
-				printf("greater force!\n");
 				// if there's an empty spot
 				if(is_card_empty(board.lanes[P_TWO][i]))
 				{
-					printf("goal achieved!\n");
 					found = 1; // found some card
 					best_position = i;
 				}
@@ -50,15 +47,14 @@ int find_best_card_index(board_t board)
 		// for every non empty card
 		// find the card with the least cost
 		if(!is_card_empty(board.p[P_TWO].hand[i])){
-		if(board.p[P_TWO].hand[i].cost <= board.p[P_TWO].hand[best_card_index].cost)
-		{
-			// and greatest force
-			if(board.p[P_TWO].hand[i].force >= board.p[P_TWO].hand[best_card_index].force)
+			if(board.p[P_TWO].hand[i].cost <= board.p[P_TWO].hand[best_card_index].cost)
 			{
-				best_card_index = i;
-				printf("card name %s\n", board.p[P_TWO].hand[i].name);
+				// and greatest force
+				if(board.p[P_TWO].hand[i].force >= board.p[P_TWO].hand[best_card_index].force)
+				{
+					best_card_index = i;
+				}
 			}
-		}
 		}
 	}
 	return best_card_index;
@@ -69,8 +65,7 @@ void enemy_AI(board_t *board)
 {
 	int best_position = find_best_position(*board);
 	int best_card_index = find_best_card_index(*board); // index including the empty cards; 
-					//that's why I don't call get_card_from_hand down below
-	printf("best position %d card name %s", best_position, board->p[P_TWO].hand[best_card_index].name);	
+					//that's why I don't call get_card_from_hand down below	
 	print_card(board->p[P_TWO].hand[best_card_index]);
 	play_card(board, P_TWO, board->p[P_TWO].hand[best_card_index], best_position);
 }
