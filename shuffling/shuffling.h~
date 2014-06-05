@@ -1,0 +1,14 @@
+#ifndef SHUFFLING_H
+#define SHUFFLING_H
+
+#include "deck.h"
+
+int shuffleChoice(struct deck_t *deck);
+void RandomShuffling(struct deck_t *deck);
+void manaOrder(struct deck_t *deck);
+void lifeOrder(struct deck_t *deck);
+void attackOrder(struct deck_t *deck);
+void costattackOrder(struct deck_t *deck);
+int file_saving(struct deck_t *deck);
+
+#endif

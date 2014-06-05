@@ -1,0 +1,233 @@
+#include <stdio.h>
+#include "AI.h"
+#include <time.h>
+#include <string.h>
+int choice;
+enum{j,NO,YES};
+int shuffleChoice(struct deck_t *deck){
+	printf("Choose the type of shuffling: \n1: Random\n2: Ordered by mana\n3: Ordered by life\n4: Ordered by force\n5: Ordered by mana and force\n");
+	//for(cards_in_deck=0;!is_card_empty(deck->array[cards_in_deck]);cards_in_deck++);
+	scanf("%d", &choice);
+	switch(choice){
+		case 1:{
+			return RandomShuffling(&deck);
+			break;
+		}
+		case 2:{
+			return manaOrder(&deck);
+			break;
+		}
+		case 3:{
+			return lifeOrder(&deck);
+			break;
+		}
+		case 4:{
+			return attackOrder(&deck);
+			break;
+		}
+		case 5:{
+			return costattackOrder(&deck);
+			break;
+		}	
+	}
+}
+int RandomShuffling(struct deck_t *deck){
+	srand(time(NULL));
+	card_t temp[30];
+	deck->top=0;
+	int rand_pos;
+	while(!is_card_empty(*(deck->array+(deck->top)+1))){
+		rand_pos=rand(30);
+		if(!is_card_empty(*(deck->array+rand_pos))){
+			temp[deck->top]=(*(deck->array+rand_pos));
+			kill_card(deck->array+rand_pos);
+			deck->top++;
+		}
+	}
+	for(;deck->top>0;deck->top--){
+		*(deck->array+(deck->top))=temp[deck->top];
+	}
+	printf("Do you want to save shuffled deck in file: 0:NO,1:YES\n");
+	scanf("%d",&choice);
+	if(choice+1==YES){
+		return file_save(&deck);
+	}
+	else return 0;
+}
+int manaOrder(struct deck_t *deck){
+	int cards_in_deck=-1;
+	while(!is_card_empty(deck->array[cards_in_deck++]));
+	int counter_1,counter_2;
+	for(counter_1=0;counter_1<cards_in_deck-1;counter_1++){
+		for(counter_2=0;counter_2<cards_in_deck;counter_2++){
+			if(deck->array[counter_2].cost<deck->array[counter_2+1].cost){
+				//card_t temp = deck->array[counter_2];
+				//deck->array[counter_2]				
+				char* temp_name = deck->array[counter_2].name;	
+				int temp_cost =	deck->array[counter_2].cost;
+				int temp_life = deck->array[counter_2].life;
+				int temp_force = deck->array[counter_2].force;
+				deck->array[counter_2].cost=deck->array[counter_2+1].cost;
+				deck->array[counter_2+1].cost=temp_cost;
+				strcpy(temp_name,deck->array[counter_2].name);
+   				strcpy(deck->array[counter_2].name,deck->array[counter_2+1].name);
+   				strcpy(deck->array[counter_2].name,temp_name);
+				deck->array[counter_2].life=deck->array[counter_2+1].life;
+				deck->array[counter_2+1].life=temp_life;
+				deck->array[counter_2].force=deck->array[counter_2+1].force;
+				deck->array[counter_2+1].force=temp_force;
+			}
+		}
+	}
+	printf("Do you want to save shuffled deck in file: 0:NO,1:YES\n");
+	scanf("%d",&choice);
+	if(choice+1==YES){
+		return file_save(&deck);
+	}
+	else return 0;
+}
+int lifeOrder(struct deck_t *deck){
+	int cards_in_deck=-1;
+	while(!is_card_empty(deck->array[cards_in_deck++]));
+	int counter_1,counter_2;
+	for(cards_in_deck=0;!is_card_empty(*(deck->array+cards_in_deck));cards_in_deck++);
+	for(counter_1=0;counter_1<cards_in_deck-1;counter_1++){
+		for(counter_2=0;counter_2<cards_in_deck;counter_2++){
+			if(deck->array[counter_2].life<deck->array[counter_2+1].life){
+				//card_t temp=deck->array[counter_2];			
+				//(deck->array+counter_2)=(deck->array+counter_2+1);
+				//(deck->array+counter_2+1)=(deck->array+counter_2);
+				char* temp_name = deck->array[counter_2].name;	
+				int temp_cost =	deck->array[counter_2].cost;
+				int temp_life = deck->array[counter_2].life;
+				int temp_force = deck->array[counter_2].force;
+				deck->array[counter_2].cost=deck->array[counter_2+1].cost;
+				deck->array[counter_2+1].cost=temp_cost;
+				strcpy(temp_name,deck->array[counter_2].name);
+   				strcpy(deck->array[counter_2].name,deck->array[counter_2+1].name);
+   				strcpy(deck->array[counter_2].name,temp_name);
+				deck->array[counter_2].life=deck->array[counter_2+1].life;
+				deck->array[counter_2+1].life=temp_life;
+				deck->array[counter_2].force=deck->array[counter_2+1].force;
+				deck->array[counter_2+1].force=temp_force;
+			}
+		}
+	}
+	printf("Do you want to save reordered deck in file: 0:NO,1:YES\n");	
+	scanf("%d",&choice);
+	if(choice+1==YES){
+		return file_save(&deck);
+	}
+	else return 0;
+}
+int attackOrder(struct deck_t *deck){
+	int cards_in_deck=-1;
+	while(!is_card_empty(deck->array[cards_in_deck++]));
+	int counter_1,counter_2;
+	for(cards_in_deck=0;!is_card_empty(*(deck->array+cards_in_deck));cards_in_deck++);
+	for(counter_1=0;counter_1<cards_in_deck-1;counter_1++){
+		for(counter_2=0;counter_2<cards_in_deck;counter_2++){
+			if(deck->array[counter_2].force<deck->array[counter_2+1].force){
+				//card_t temp=deck->array[counter_2];			
+				//(deck->array+counter_2)=(deck->array+counter_2+1);
+				//(deck->array+counter_2+1)=(deck->array+counter_2);
+				char* temp_name = deck->array[counter_2].name;	
+				int temp_cost =	deck->array[counter_2].cost;
+				int temp_life = deck->array[counter_2].life;
+				int temp_force = deck->array[counter_2].force;
+				deck->array[counter_2].cost=deck->array[counter_2+1].cost;
+				deck->array[counter_2+1].cost=temp_cost;
+				strcpy(temp_name,deck->array[counter_2].name);
+   				strcpy(deck->array[counter_2].name,deck->array[counter_2+1].name);
+   				strcpy(deck->array[counter_2].name,temp_name);
+				deck->array[counter_2].life=deck->array[counter_2+1].life;
+				deck->array[counter_2+1].life=temp_life;
+				deck->array[counter_2].force=deck->array[counter_2+1].force;
+				deck->array[counter_2+1].force=temp_force;
+			}
+		}
+	}
+	printf("Do you want to save reordered deck in file: 0:NO,1:YES\n");
+	scanf("%d",&choice);
+	if(choice+1==YES){
+		return file_save(&deck);
+	}
+	else return 0;
+}
+int costattackOrder(struct deck_t *deck){
+	int cards_in_deck=-1;
+	while(!is_card_empty(deck->array[cards_in_deck++]));
+	int counter_1,counter_2;
+	for(counter_1=0;counter_1<cards_in_deck-1;counter_1++){
+		for(counter_2=0;counter_2<cards_in_deck;counter_2++){
+			if(deck->array[counter_2].cost<deck->array[counter_2+1].cost){
+				//card_t temp=deck->array[counter_2];			
+				//(deck->array+counter_2)=(deck->array+counter_2+1);
+				//(deck->array+counter_2+1)=(deck->array+counter_2);
+				char* temp_name = deck->array[counter_2].name;	
+				int temp_cost =	deck->array[counter_2].cost;
+				int temp_life = deck->array[counter_2].life;
+				int temp_force = deck->array[counter_2].force;
+				deck->array[counter_2].cost=deck->array[counter_2+1].cost;
+				deck->array[counter_2+1].cost=temp_cost;
+				strcpy(temp_name,deck->array[counter_2].name);
+   				strcpy(deck->array[counter_2].name,deck->array[counter_2+1].name);
+   				strcpy(deck->array[counter_2].name,temp_name);
+				deck->array[counter_2].life=deck->array[counter_2+1].life;
+				deck->array[counter_2+1].life=temp_life;
+				deck->array[counter_2].force=deck->array[counter_2+1].force;
+				deck->array[counter_2+1].force=temp_force;
+			}
+		}
+	}	
+	for(counter_1=0;counter_1<cards_in_deck-1;counter_1++){
+		for(counter_2=0;counter_2<cards_in_deck;counter_2++){
+			if(deck->array[counter_2].force<deck->array[counter_2+1].force){
+				//card_t temp=deck->array[counter_2];			
+				//(deck->array+counter_2)=(deck->array+counter_2+1);
+				//(deck->array+counter_2+1)=(deck->array+counter_2);
+				char* temp_name = deck->array[counter_2].name;	
+				int temp_cost =	deck->array[counter_2].cost;
+				int temp_life = deck->array[counter_2].life;
+				int temp_force = deck->array[counter_2].force;
+				deck->array[counter_2].cost=deck->array[counter_2+1].cost;
+				deck->array[counter_2+1].cost=temp_cost;
+				strcpy(temp_name,deck->array[counter_2].name);
+   				strcpy(deck->array[counter_2].name,deck->array[counter_2+1].name);
+   				strcpy(deck->array[counter_2].name,temp_name);
+				deck->array[counter_2].life=deck->array[counter_2+1].life;
+				deck->array[counter_2+1].life=temp_life;
+				deck->array[counter_2].force=deck->array[counter_2+1].force;
+				deck->array[counter_2+1].force=temp_force;
+			}
+		}
+	}	
+	printf("Do you want to save reordered deck in file: 0:NO,1:YES\n");
+	scanf("%d",&choice);
+	if(choice+1==YES){
+		return file_save(&deck);
+	}
+	else return 0;
+}
+int file_save(struct deck_t *deck){
+	FILE *f = NULL;
+	f = fopen ("ShuffledDeck.txt","w");
+	int card_in_deck,counter_1=0;
+	for(card_in_deck=0;!is_card_empty(*(deck->array+card_in_deck));card_in_deck++);
+	while(counter_1++ < card_in_deck){
+		fprintf(f, "%s,%d,%d,%d\n", 
+		deck->array[counter_1].name,
+		deck->array[counter_1].cost,
+		deck->array[counter_1].force,
+		deck->array[counter_1].life);
+		/*printf("%s,%d,%d,%d\n", 
+		deck->array[counter_1].name,
+		deck->array[counter_1].cost,
+		deck->array[counter_1].force,
+		deck->array[counter_1].life);
+		sleep(3);*/
+	}
+	fclose(f);
+}
+
+
